@@ -38,3 +38,21 @@ SELECT * FROM BuscarProduto;
 CREATE TABLE LOG(ID NUMBER, Campo VARCHAR2(100), ValorAntigo VARCHAR2(100), NomeTabela VARCHAR2(100));
 
 SELECT * FROM LOG;
+
+-- Exercício 5
+CREATE OR REPLACE TRIGGER afterUpdateProdutoPreco
+AFTER UPDATE ON ProdutoPreco
+REFERENCING Old AS Old
+FOR EACH ROW
+
+DECLARE
+    linhaId ProdutoPreco.Id%Type;
+    linhaStatus ProdutoPreco.Valor%Type;
+    linhaValor ProdutoPreco.Status%Type;
+BEGIN
+    linhaId := :Old.ID;
+    linhaStatus := :Old.Status;
+    linhaValor := :Old.Valor;
+   
+    INSERT INTO Log(ID,  Campo, ValorAntigo, NomeTabela) VALUES (linhaId, linhaStatus, linhaValor, 'ProdutoPreco');
+END;
