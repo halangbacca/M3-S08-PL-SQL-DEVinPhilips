@@ -40,19 +40,19 @@ CREATE TABLE LOG(ID NUMBER, Campo VARCHAR2(100), ValorAntigo VARCHAR2(100), Nome
 SELECT * FROM LOG;
 
 -- Exercício 5
-CREATE OR REPLACE TRIGGER afterUpdateProdutoPreco
-AFTER UPDATE ON ProdutoPreco
+CREATE OR REPLACE TRIGGER afterUpdateProduto
+AFTER UPDATE ON Produto
 REFERENCING Old AS Old
 FOR EACH ROW
 
 DECLARE
-    linhaId ProdutoPreco.Id%Type;
-    linhaStatus ProdutoPreco.Valor%Type;
-    linhaValor ProdutoPreco.Status%Type;
+    linhaId Produto.Id%Type;
+    linhaDescricao Produto.Descricao%Type;
+    linhaEstoque Produto.QuantidadeEmEstoque%Type;
 BEGIN
     linhaId := :Old.ID;
-    linhaStatus := :Old.Status;
-    linhaValor := :Old.Valor;
+    linhaDescricao := :Old.Descricao;
+    linhaEstoque := :Old.QuantidadeEmEstoque;
    
-    INSERT INTO Log(ID,  Campo, ValorAntigo, NomeTabela) VALUES (linhaId, linhaStatus, linhaValor, 'ProdutoPreco');
+    INSERT INTO Log(ID,  Campo, ValorAntigo, NomeTabela) VALUES (linhaId, linhaDescricao, linhaEstoque, 'Produto');
 END;
