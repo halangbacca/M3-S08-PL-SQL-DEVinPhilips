@@ -14,3 +14,10 @@ BEGIN
 END;
 
 SELECT Valor AS VALOR_TOTAL, CalcularDesconto(ID, 1) AS VALOR_COM_DESCONTO FROM ProdutoPreco WHERE ID = 5;
+
+-- Exercício 2
+CREATE OR REPLACE VIEW ApenasLeituraProdutoPreco
+AS
+    SELECT ID FROM ProdutoPreco WITH READ ONLY;
+    
+SELECT * FROM ApenasLeituraProdutoPreco;
