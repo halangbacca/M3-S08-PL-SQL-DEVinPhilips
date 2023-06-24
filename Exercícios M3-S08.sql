@@ -33,3 +33,8 @@ AS
 UPDATE BuscarProduto SET Valor = 150 WHERE ID = 15; --Violação da cláusula
        
 SELECT * FROM BuscarProduto;
+
+-- Exercício 4
+CREATE TABLE LOG(ID NUMBER, Campo VARCHAR2(100), ValorAntigo VARCHAR2(100), NomeTabela VARCHAR2(100));
+
+SELECT * FROM LOG;
