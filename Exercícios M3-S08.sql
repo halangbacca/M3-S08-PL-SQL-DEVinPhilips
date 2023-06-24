@@ -21,3 +21,15 @@ AS
     SELECT ID FROM ProdutoPreco WITH READ ONLY;
     
 SELECT * FROM ApenasLeituraProdutoPreco;
+
+-- Exercício 3
+CREATE OR REPLACE VIEW BuscarProduto
+AS
+    SELECT ID, IdProduto, Valor, Status, Cadastro 
+    FROM ProdutoPreco
+    WHERE Valor NOT BETWEEN 100 AND 200
+    WITH CHECK OPTION;
+   
+UPDATE BuscarProduto SET Valor = 150 WHERE ID = 15; --Violação da cláusula
+       
+SELECT * FROM BuscarProduto;
