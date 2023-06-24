@@ -57,11 +57,13 @@ BEGIN
     INSERT INTO Log(ID,  Campo, ValorAntigo, NomeTabela) VALUES (linhaId, linhaDescricao, linhaEstoque, 'Produto');
 END;
 
+UPDATE Produto SET QUANTIDADEEMESTOQUE = 80 WHERE ID = 7;
+
 SELECT * FROM Log;
 
 -- Exercício 6
 CREATE OR REPLACE TRIGGER beforeUpdateProdutoPreco
-BEFORE UPDATE ON ProdutoPreco
+BEFORE DELETE ON ProdutoPreco
 REFERENCING Old AS Old
 FOR EACH ROW
 
@@ -76,5 +78,9 @@ BEGIN
    
     INSERT INTO Log(ID,  Campo, ValorAntigo, NomeTabela) VALUES (linhaId, linhaStatus, linhaValor, 'ProdutoPreco');
 END;
+
+INSERT INTO PRODUTOPRECO(ID, IDPRODUTO, VALOR, STATUS, CADASTRO) VALUES (16, 6, '1600', 1, SYSDATE);
+
+DELETE FROM ProdutoPreco WHERE ID = 16;
 
 SELECT * FROM Log;
