@@ -42,7 +42,7 @@ SELECT * FROM LOG;
 -- Exercício 5
 CREATE OR REPLACE TRIGGER afterUpdateProduto
 AFTER UPDATE ON Produto
-REFERENCING Old AS Old
+REFERENCING NEW AS New
 FOR EACH ROW
 
 DECLARE
@@ -50,9 +50,31 @@ DECLARE
     linhaDescricao Produto.Descricao%Type;
     linhaEstoque Produto.QuantidadeEmEstoque%Type;
 BEGIN
-    linhaId := :Old.ID;
-    linhaDescricao := :Old.Descricao;
-    linhaEstoque := :Old.QuantidadeEmEstoque;
+    linhaId := :New.ID;
+    linhaDescricao := :New.Descricao;
+    linhaEstoque := :New.QuantidadeEmEstoque;
    
     INSERT INTO Log(ID,  Campo, ValorAntigo, NomeTabela) VALUES (linhaId, linhaDescricao, linhaEstoque, 'Produto');
 END;
+
+SELECT * FROM Log;
+
+-- Exercício 6
+CREATE OR REPLACE TRIGGER beforeUpdateProdutoPreco
+BEFORE UPDATE ON ProdutoPreco
+REFERENCING Old AS Old
+FOR EACH ROW
+
+DECLARE
+    linhaId ProdutoPreco.Id%Type;
+    linhaValor ProdutoPreco.Valor%Type;
+    linhaStatus ProdutoPreco.Status%Type;
+BEGIN
+    linhaId := :Old.ID;
+    linhaValor := :Old.Valor;
+    linhaStatus := :Old.Status;
+   
+    INSERT INTO Log(ID,  Campo, ValorAntigo, NomeTabela) VALUES (linhaId, linhaStatus, linhaValor, 'ProdutoPreco');
+END;
+
+SELECT * FROM Log;
